@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>Economy Pro · Макроэкономика</title>
+  <link rel="stylesheet" href="/app.css?v=20260707">
+  <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
+  <script src="/app.js?v=20260707" defer></script>
+</head>
+<body>
+  <div id="loader" class="loader"><div class="spinner"></div><b>Загрузка...</b><span>Подготавливаем тесты</span></div>
+
+  <header class="topbar">
+    <button id="drawerBtn" class="icon-btn" aria-label="Меню">☰</button>
+    <div class="brand"><span class="logo">EP</span><div><b>Economy Pro</b><small>Макроэкономика</small></div></div>
+    <button id="themeBtn" class="icon-btn" title="Тема">◐</button>
+  </header>
+
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head"><b>Меню</b><button id="closeDrawer" class="icon-btn">×</button></div>
+    <div class="drawer-group"><span>Обучение</span><button data-go="study">Изучить тесты</button><button data-go="favorites">⭐ Избранные</button><button data-go="mistakes">❗ Изучить ошибки</button></div>
+    <div class="drawer-group"><span>Тесты</span><button data-start="normal">Обычный тест</button><button data-start="notime">Без времени</button><button data-start="real">Реальный тест</button></div>
+    <div class="drawer-group"><span>Результаты</span><button data-go="history">История результатов</button><button data-go="stats">Статистика</button></div>
+    <div class="drawer-group"><span>Доступ</span><button data-go="pay">Активация подписки</button><a href="/admin/" target="_blank" rel="noopener">Админка</a></div>
+    <div class="drawer-group"><span>Настройки</span><button data-action="resetLocal">Сбросить настройки</button><a href="https://t.me/nurislombekm" target="_blank" rel="noopener">Написать администратору</a></div>
+  </aside>
+  <div id="shade" class="shade"></div>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero card">
+        <div><p class="eyebrow">Добро пожаловать</p><h1>Тренажёр по макроэкономике</h1><p>Обычный тест, режим без времени, реальный экзамен, избранное, ошибки, история и подписка — всё сохранено.</p></div>
+        <div class="status-box"><span id="accessBadge">Обычный пользователь</span><small id="userLine">ID определяется...</small><small id="deviceLine">Устройство...</small></div>
+      </div>
+
+      <div id="resumeCard" class="card resume hidden"><b>Продолжить предыдущий тест?</b><span>У вас есть незавершённая попытка.</span><div><button id="resumeBtn" class="primary">Продолжить</button><button id="clearResumeBtn">Сбросить</button></div></div>
+
+      <div class="grid two">
+        <div class="card">
+          <h2>Быстрый старт</h2>
+          <div class="mode-tabs"><button data-mode="normal" class="active">Обычный</button><button data-mode="notime">Без времени</button><button data-mode="real">Реальный</button></div>
+          <label>Количество вопросов<select id="countSelect"><option value="20">20 вопросов</option><option value="25">25 вопросов</option><option value="30">30 вопросов</option><option value="40">40 вопросов</option><option value="all">Все вопросы</option><option value="fav">Избранные</option><option value="mistakes">Режим ошибки</option></select></label>
+          <label>Порядок<select id="orderSelect"><option value="random">Случайно</option><option value="order">По порядку</option></select></label>
+          <label>Диапазон<select id="rangeSelect"><option value="all">Все вопросы</option></select></label>
+          <label id="timeWrap">Время теста, секунд<input id="timeInput" type="number" value="1200" min="60" step="30"></label>
+          <button id="startBtn" class="primary big">Начать тест</button>
+          <p id="limitNote" class="note"></p>
+        </div>
+        <div class="card progress-card">
+          <h2>Прогресс</h2>
+          <div class="progress"><span id="progressText">0/0</span><i id="progressFill"></i></div>
+          <div class="mini-stats"><div><b id="totalCount">—</b><span>в базе</span></div><div><b id="favCount">0</b><span>избранных</span></div><div><b id="mistakeCount">0</b><span>ошибок</span></div></div>
+          <button data-go="study">Открыть список вопросов</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="screen">
+      <div class="quiz-top card"><button data-go="home">← Меню</button><div><b id="quizTitle">Тест</b><small id="quizMeta">0/0</small></div><div id="timer">20:00</div></div>
+      <div class="card question-card"><div class="q-head"><span id="qNum">Вопрос 1</span><button id="favBtn">☆</button></div><h2 id="qText"></h2><div id="options" class="options"></div><div class="actions"><button id="prevBtn">← Назад</button><button id="confirmBtn" class="primary">Подтвердить</button><button id="nextBtn">Дальше →</button><button id="finishBtn" class="danger">Завершить</button></div></div>
+    </section>
+
+    <section id="real" class="screen">
+      <div class="real-fixed"><b>Реальный тест</b><span id="realTimer">30:00</span><button id="realFinishTop">Завершить</button></div>
+      <div class="card"><h2>Реальный тест</h2><p>25 вопросов · 30 минут · ответы показываются после завершения.</p><div id="realList" class="real-list"></div><div class="actions"><button id="realFinishBtn" class="danger">Завершить реальный тест</button><button data-go="home">Вернуться в меню</button></div></div>
+    </section>
+
+    <section id="study" class="screen"><div class="card"><div class="section-head"><button data-go="home">← Назад</button><h2>Список вопросов</h2></div><input id="searchInput" class="search" placeholder="Поиск по вопросам..."><label class="check"><input type="checkbox" id="showAnswers"> Показать все варианты ответов</label><div id="studyList" class="study-list"></div></div></section>
+
+    <section id="history" class="screen"><div class="card"><div class="section-head"><button data-go="home">← Назад</button><h2>История результатов</h2></div><div id="historyList"></div><button id="clearHistory">Очистить историю</button></div></section>
+    <section id="stats" class="screen"><div class="card"><div class="section-head"><button data-go="home">← Назад</button><h2>Статистика</h2></div><div id="statsBox" class="stats-box"></div></div></section>
+    <section id="result" class="screen"><div class="card result"><h2>Результат</h2><div class="score" id="scoreBox">0 / 0</div><p id="scorePercent">0%</p><div class="actions"><button data-go="home" class="primary">В меню</button><button id="reviewBtn">Разбор</button></div><div id="reviewList" class="study-list"></div></div></section>
+  </main>
+
+  <nav class="bottom-nav"><button data-go="home">Главная</button><button data-go="study">Тесты</button><button data-go="mistakes">Ошибки</button><button data-go="history">История</button></nav>
+
+  <div id="paywall" class="modal hidden"><div class="modal-card"><button id="closePay" class="modal-close">×</button><h2>Премиум-доступ</h2><p>Без премиума доступно 3 теста за 24 часа. Премиум снимает лимит.</p><div class="pay-grid"><span>Telegram ID</span><b id="payUser">—</b><span>ID устройства</span><b id="payDevice">—</b><span>Стоимость</span><b>30 000 сум</b><span>Карта</span><b>5614 6805 7717 0398</b></div><div class="actions"><button id="copyCard">Скопировать карту</button><button id="copyPayData" class="primary">Скопировать данные</button><a class="button" href="https://t.me/nurislombekm" target="_blank">Отправить чек</a></div><p id="payMsg" class="note"></p></div></div>
+
+  <script>window.APP_CONFIG={adminUsername:'nurislombekm',freeLimit:3};</script>
+</body>
+</html>
