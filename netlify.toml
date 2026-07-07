@@ -1,0 +1,36 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# Базовые заголовки безопасности для всего сайта.
+# ВАЖНО: не используем X-Frame-Options: DENY/SAMEORIGIN и не запрещаем
+# фреймы полностью через CSP — Telegram открывает Mini App внутри своего
+# iframe/WebView (web.telegram.org и *.telegram.org), это должно продолжать работать.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains"
+    Content-Security-Policy = "frame-ancestors 'self' https://web.telegram.org https://*.telegram.org https://telegram.org"
+
+# Страница администратора — сама её не встраивают в Telegram, поэтому её
+# можно защитить от clickjacking строже (запрет любых фреймов).
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Cache-Control = "no-store"
