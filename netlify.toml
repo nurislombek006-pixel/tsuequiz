@@ -12,38 +12,3 @@
   from = "/admin"
   to = "/admin/index.html"
   status = 200
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()"
-    Cross-Origin-Opener-Policy = "same-origin"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: blob: https://t.me https://telegram.org https://*.telegram.org; connect-src 'self' https://api.telegram.org; script-src 'self' 'unsafe-inline' https://telegram.org https://*.telegram.org; style-src 'self' 'unsafe-inline'; font-src 'self' data:; form-action 'self' https://t.me; upgrade-insecure-requests"
-
-[[headers]]
-  for = "/index.html"
-  [headers.values]
-    Cache-Control = "no-store, max-age=0"
-
-[[headers]]
-  for = "/admin/*"
-  [headers.values]
-    Cache-Control = "no-store, max-age=0"
-
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Cache-Control = "no-store, max-age=0"
-
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
